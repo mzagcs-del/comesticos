@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adriana Roca - Cosméticos</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --azul-pastel: #d1e9f6;
+            --azul-medio: #a7c7e7;
+            --texto: #4a4a4a;
+            --blanco: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--blanco);
+            color: var(--texto);
+            line-height: 1.6;
+        }
+
+        header {
+            background: var(--azul-pastel);
+            padding: 1rem 5%;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        /* --- Slider Section --- */
+        .slider-container {
+            position: relative;
+            max-width: 1000px;
+            margin: 2rem auto;
+            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .slides {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .slide {
+            min-width: 100%;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-size: cover;
+            background-position: center;
+            color: var(--blanco);
+            font-size: 2rem;
+            font-weight: 600;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        /* --- Brands Section --- */
+        .brands {
+            padding: 3rem 5%;
+            text-align: center;
+            background-color: #f9fbfd;
+        }
+
+        .brand-grid {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+            opacity: 0.7;
+        }
+
+        .brand-item {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--azul-medio);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* --- Order Form Section --- */
+        .order-section {
+            padding: 4rem 5%;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .order-form {
+            background: var(--azul-pastel);
+            padding: 2rem;
+            border-radius: 15px;
+        }
+
+        .order-form h2 { margin-bottom: 1.5rem; text-align: center; }
+
+        .order-form input, .order-form select, .order-form textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 1rem;
+            border: none;
+            border-radius: 8px;
+        }
+
+        .btn-send {
+            background-color: var(--azul-medio);
+            color: white;
+            border: none;
+            padding: 15px;
+            width: 100%;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .btn-send:hover { background-color: #89b0d6; }
+
+        /* --- Footer --- */
+        footer {
+            background: #333;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .instagram-link {
+            color: var(--azul-pastel);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .slide { height: 250px; font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Adriana Roca Beauty</h1>
+    </header>
+
+    <section class="slider-container">
+        <div class="slides" id="slides">
+            <div class="slide" style="background-color: #b3d9ff;">LABIALES</div>
+            <div class="slide" style="background-color: #c2e0ff;">RUBORES</div>
+            <div class="slide" style="background-color: #d1e9f6;">SOMBRAS</div>
+            <div class="slide" style="background-color: #e3f2fd;">BROCHAS</div>
+        </div>
+    </section>
+
+    <section class="brands">
+        <h2>Nuestras Marcas</h2>
+        <div class="brand-grid">
+            <div class="brand-item">Vogue</div>
+            <div class="brand-item">Maybelline</div>
+            <div class="brand-item">Dior</div>
+        </div>
+    </section>
+
+    <section class="order-section">
+        <div class="order-form">
+            <h2>Haz tu Pedido</h2>
+            <input type="text" id="nombre" placeholder="Tu Nombre" required>
+            <select id="producto">
+                <option value="Labial">Labial</option>
+                <option value="Rubor">Rubor</option>
+                <option value="Sombras">Sombras</option>
+                <option value="Brochas">Brochas</option>
+            </select>
+            <textarea id="detalle" placeholder="Detalles del pedido (color, cantidad...)" rows="4"></textarea>
+            <button class="btn-send" onclick="enviarWhatsApp()">Enviar pedido por WhatsApp</button>
+        </div>
+    </section>
+
+    <footer>
+        <p>Síguenos en Instagram: <a href="https://instagram.com/adriana.rocaa" class="instagram-link" target="_blank">@adriana.rocaa</a></p>
+        <p style="font-size: 0.8rem; margin-top: 10px;">&copy; 2026 Adriana Roca Beauty</p>
+    </footer>
+
+    <script>
+        // Lógica del Slider automático
+        let index = 0;
+        const slides = document.getElementById('slides');
+        
+        function moveSlider() {
+            index++;
+            if (index > 3) index = 0;
+            slides.style.transform = `translateX(-${index * 100}%)`;
+        }
+        setInterval(moveSlider, 3000);
+
+        // Lógica de WhatsApp
+        function enviarWhatsApp() {
+            const nombre = document.getElementById('nombre').value;
+            const producto = document.getElementById('producto').value;
+            const detalle = document.getElementById('detalle').value;
+            const numero = "59177379113";
+
+            if(!nombre) { alert("Por favor pon tu nombre"); return; }
+
+            const mensaje = `Hola Adriana! Mi nombre es ${nombre}. Quisiera pedir: ${producto}. Detalles: ${detalle}`;
+            const url = `https://api.whatsapp.com/send?phone=${numero}&text=${encodeURIComponent(mensaje)}`;
+            
+            window.open(url, '_blank');
+        }
+    </script>
+</body>
+</html>
